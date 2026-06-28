@@ -20,12 +20,14 @@ class AmountDisplay extends StatelessWidget {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppDimensions.amountPadding),
-      color: Theme.of(context).colorScheme.primaryContainer,
+      color: Colors.teal.shade700,
       child: Text(
         'Taka: $amount',
         style: TextStyle(
           fontSize: fontSize,
           fontWeight: FontWeight.bold,
+          color: Colors.white,
+          letterSpacing: 1.2,
         ),
       ),
     );

@@ -4,7 +4,7 @@ import '../utils/change_calculator.dart';
 
 class ChangeTable extends StatelessWidget {
   final Map<int, int> changeMap;
-  final int columns;
+  final int columns; // 1 for portrait, 2 for landscape
   final bool isTablet;
 
   const ChangeTable({
@@ -21,9 +21,11 @@ class ChangeTable extends StatelessWidget {
         : AppDimensions.tableFontSize;
     final allDenoms = denominations;
 
-    return columns == 1
-        ? _buildSingleColumn(allDenoms, fontSize)
-        : _buildTwoColumns(allDenoms, fontSize);
+    if (columns == 1) {
+      return _buildSingleColumn(allDenoms, fontSize);
+    } else {
+      return _buildTwoColumns(allDenoms, fontSize);
+    }
   }
 
   Widget _buildSingleColumn(List<int> denoms, double fontSize) {
@@ -35,8 +37,8 @@ class ChangeTable extends StatelessWidget {
 
   Widget _buildTwoColumns(List<int> denoms, double fontSize) {
     final half = denoms.length ~/ 2;
-    final left = denoms.sublist(0, half);
-    final right = denoms.sublist(half);
+    final left = denoms.sublist(0, half);   // 500,100,50,20
+    final right = denoms.sublist(half);     // 10,5,2,1
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,

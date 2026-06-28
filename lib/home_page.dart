@@ -6,14 +6,7 @@ import 'widgets/change_table.dart';
 import 'widgets/numeric_keypad.dart';
 
 class HomePage extends StatefulWidget {
-  final VoidCallback onToggleTheme;
-  final bool isDark;
-
-  const HomePage({
-    super.key,
-    required this.onToggleTheme,
-    required this.isDark,
-  });
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -45,35 +38,27 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'VangtiChai',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
+        title: const Text('VangtiChai'),
         backgroundColor: Theme.of(context).colorScheme.primary,
         foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: Icon(
-              widget.isDark ? Icons.light_mode : Icons.dark_mode,
-              color: Colors.white,
-            ),
-            tooltip:
-                widget.isDark ? 'Switch to light mode' : 'Switch to dark mode',
-            onPressed: widget.onToggleTheme,
-          ),
-        ],
       ),
       body: OrientationBuilder(
         builder: (context, orientation) {
-          return orientation == Orientation.portrait
-              ? _buildPortrait(changeMap, isTablet)
-              : _buildLandscape(changeMap, isTablet);
+          if (orientation == Orientation.portrait) {
+            return _buildPortrait(context, changeMap, isTablet);
+          } else {
+            return _buildLandscape(context, changeMap, isTablet);
+          }
         },
       ),
     );
   }
 
-  Widget _buildPortrait(Map<int, int> changeMap, bool isTablet) {
+  Widget _buildPortrait(
+    BuildContext context,
+    Map<int, int> changeMap,
+    bool isTablet,
+  ) {
     return Column(
       children: [
         AmountDisplay(amount: _amount, isTablet: isTablet),
@@ -106,7 +91,11 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildLandscape(Map<int, int> changeMap, bool isTablet) {
+  Widget _buildLandscape(
+    BuildContext context,
+    Map<int, int> changeMap,
+    bool isTablet,
+  ) {
     return Column(
       children: [
         AmountDisplay(amount: _amount, isTablet: isTablet),
